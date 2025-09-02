@@ -1,4 +1,11 @@
+#include <SoftwareSerial.h>
 #define SERIAL_BAUD 9600
+
+// Bluetooth variables
+SoftwareSerial bt(2, 3);  // (Tx, Rx) of BT
+#define BLUETOOTH_BAUD 38400
+#define BT_SIGNAL_DOT '2'
+#define BT_SIGNAL_DASH '3'
 
 // Input device variables
 #define BUTTON_PIN 4
@@ -18,6 +25,7 @@
 // Setup Logic
 void setup() {
   Serial.begin(SERIAL_BAUD);
+  Serial.println("Started remote");
 
   // LEDs
   pinMode(LED_RED_PIN, OUTPUT);
@@ -26,6 +34,10 @@ void setup() {
 
   // INPUT_PULLUP because button connects to GND when pressed
   pinMode(BUTTON_PIN, INPUT_PULLUP);
+
+  bt.begin(BLUETOOTH_BAUD);
+
+  Serial.println("Initialized remote!");
 }
 
 // Loop logic (main code)
@@ -72,6 +84,7 @@ void morseDot() {
   delay(LED_ON_DURATION);
   digitalWrite(DOT_LED, LOW);
 
+  sendBluetoothSignal(BT_SIGNAL_DOT);
 }
 
 /* Function to signal a dash in morse code
@@ -84,4 +97,16 @@ void morseDash() {
   delay(LED_ON_DURATION);
   digitalWrite(DASH_LED, LOW);
 
+  sendBluetoothSignal(BT_SIGNAL_DASH);
+}
+
+/* Function to send a signal via bluetooth
+ * Arguments: char (signal to send)
+ * Returns: None
+ */
+void sendBluetoothSignal(char signal) {
+  // Serial.print("BLUETOOTH: sending -> ");
+  // Serial.println(signal);
+
+  bt.write(signal);
 }
