@@ -9,11 +9,11 @@
 #define LED_BLUE_PIN 7
 
 // Morse code logic variables
-#define MIN_HOLD_DURATION 200  // milliseconds
-#define MIN_PAUSE_DURATION 200 // milliseconds
+#define MIN_HOLD_DURATION 200   // milliseconds
+#define MIN_PAUSE_DURATION 200  // milliseconds
 #define DOT_LED LED_GREEN_PIN
 #define DASH_LED LED_BLUE_PIN
-#define LED_ON_DURATION 10 // milliseconds
+#define LED_ON_DURATION 10  // milliseconds
 
 // Setup Logic
 void setup() {
@@ -62,16 +62,24 @@ void handleButtonPress(int button_pin) {
   delay(MIN_PAUSE_DURATION);
 }
 
+/* Function to signal a dot in morse code
+ * Arguments: None
+ * Returns: None
+ */
 void morseDot() {
-  Serial.println("MORSE: DOT");
+  Serial.print(".");
   digitalWrite(DOT_LED, HIGH);
   delay(LED_ON_DURATION);
   digitalWrite(DOT_LED, LOW);
 
 }
 
+/* Function to signal a dash in morse code
+ * Arguments: None
+ * Returns: None
+ */
 void morseDash() {
-  Serial.println("MORSE: DASH");
+  Serial.print("_");
   digitalWrite(DASH_LED, HIGH);
   delay(LED_ON_DURATION);
   digitalWrite(DASH_LED, LOW);
